@@ -27,7 +27,7 @@ resource "aws_ecs_task_definition" "TD" {
 
     {
       name      = "backend"
-      image     = "081212343968.dkr.ecr.us-east-1.amazonaws.com/backend:19"
+      image     = "081212343968.dkr.ecr.us-east-1.amazonaws.com/backend:20"
       essential = true
 
       cpu    = 512
