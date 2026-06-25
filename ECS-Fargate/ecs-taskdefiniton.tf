@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "TD" {
   container_definitions = jsonencode([
     {
       name      = "frontend"
-      image     = "081212343968.dkr.ecr.us-east-1.amazonaws.com/frontend:1"
+      image     = "081212343968.dkr.ecr.us-east-1.amazonaws.com/frontend:2"
       essential = true
 
       cpu    = 512
@@ -27,7 +27,7 @@ resource "aws_ecs_task_definition" "TD" {
 
     {
       name      = "backend"
-      image     = "081212343968.dkr.ecr.us-east-1.amazonaws.com/backend:17"
+      image     = "081212343968.dkr.ecr.us-east-1.amazonaws.com/backend:19"
       essential = true
 
       cpu    = 512
