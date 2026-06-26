@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API_BASE = "http://localhost:3500";
+const API_BASE = "http://13.219.88.39:3500";
 
 const formatDate = (iso) => {
   if (!iso) return "";
