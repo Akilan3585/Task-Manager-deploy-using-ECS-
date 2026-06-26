@@ -240,17 +240,8 @@ const ensureTables = async () => {
     // ================================================================
     // START SERVER
     // ================================================================
-    const server = app.listen(3500, () => {
+    app.listen(3500, () => {
       console.log('🚀 Task Manager server running on port 3500');
-    });
-
-    server.on('error', (error) => {
-      if (error.code === 'EADDRINUSE') {
-        console.error('❌ Port 3500 already in use. Run: sudo lsof -ti :3500 | xargs sudo kill -9');
-      } else {
-        console.error('❌ Server error:', error.message);
-      }
-      process.exit(1);
     });
 
   } catch (error) {
