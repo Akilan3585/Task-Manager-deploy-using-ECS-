@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { SSMClient, GetParameterCommand } = require('@aws-sdk/client-ssm');
