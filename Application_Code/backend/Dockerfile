@@ -1,37 +1,32 @@
-FROM node:18-alpine AS builder
+# ── Stage 1: Install dependencies ──────────────────────────────────
+FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files first for caching
+# Copy package files first (layer cache: only reinstalls when package.json changes)
 COPY package*.json ./
 
-# Install only production dependencies first
-RUN npm ci --only=production && npm cache clean --force
+# Install production deps only
+RUN npm ci --omit=dev && npm cache clean --force
 
-# Copy the full application (after deps installed to leverage cache)
-COPY . .
-
-FROM node:18-alpine
+# ── Stage 2: Lean production image ─────────────────────────────────
+FROM node:20-alpine
 
 # Create non-root user for security
 RUN addgroup -S nodejs && adduser -S nodejs -G nodejs
 
-# Set working directory
 WORKDIR /app
 
-# Copy only production files from builder
-COPY --from=builder /app /app
+# Copy node_modules and source separately — avoids the lstat mount error
+COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
+COPY --chown=nodejs:nodejs . .
 
 # Switch to non-root user
 USER nodejs
 
-# Expose your app port
+# Expose app port
 EXPOSE 3500
 
-# Use NODE_ENV for better runtime optimization
 ENV NODE_ENV=production
 
-# Start the Node app
 CMD ["node", "server.js"]
-
